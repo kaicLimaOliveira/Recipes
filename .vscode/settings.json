@@ -1,0 +1,14 @@
+{
+    "python.testing.pytestArgs": [
+        "apps"
+    ],
+    "python.testing.unittestEnabled": true,
+    "python.testing.pytestEnabled": false,
+    "python.testing.unittestArgs": [
+        "-v",
+        "-s",
+        "./apps",
+        "-p",
+        "test_*.py"
+    ]
+}

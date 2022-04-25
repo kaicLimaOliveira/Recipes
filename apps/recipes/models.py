@@ -1,4 +1,3 @@
-from enum import unique
 from django.contrib.auth.models import User
 from django.db import models
 
