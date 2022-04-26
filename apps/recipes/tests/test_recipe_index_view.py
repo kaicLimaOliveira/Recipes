@@ -1,6 +1,10 @@
-from django.urls import reverse, resolve
-from .test_recipe_base import RecipeTestBase
+from unittest.mock import patch
+
 from apps.recipes import views
+from django.urls import resolve, reverse
+
+from .test_recipe_base import RecipeTestBase
+
 
 class RecipeIndexViewsTest(RecipeTestBase):
     """
@@ -58,3 +62,18 @@ class RecipeIndexViewsTest(RecipeTestBase):
             '<h1>Não tem receitas aqui. :(</h1>',
             response.content.decode('utf-8')
         )
+        
+    @patch('apps.recipes.views.PER_PAGE', new=5)
+    def test_recipe_index_is_paginated(self):
+        """
+        Check how many recipes per page exist
+        """
+        for i in range(20):
+            kwargs = { 'author_data': { 'username': f'u{i}'} , 'slug': f'r{i}',  }
+            self.make_recipe(**kwargs)
+
+        response = self.client.get(reverse('recipes:home'))
+        recipes = response.context['recipes']
+        paginator = recipes.paginator
+        
+        self.assertEqual(paginator.num_pages, 4)
