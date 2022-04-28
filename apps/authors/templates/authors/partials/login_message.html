@@ -1,0 +1,25 @@
+{% if user.is_authenticated %}
+<div class="login-message">
+    <div class="">
+        Você está logado como {{ request.user.first_name }}.
+    </div>
+
+    <div class="options">
+        <a class="new-recipe" href="{% url 'authors:dashboard_new_recipe' %}">Crie uma nova receita</a> ou
+
+        {% if is_page_edit is False %}
+        <button class="button-return">
+            <a href="{% url 'authors:dashboard' %}">Voltar</a>
+        </button>
+        {% endif %}
+
+        <form action="{% url 'authors:logout' %}">
+            {% csrf_token %}
+            <input type="hidden" name="username" value="{{ request.user.username }}">
+            <button class="plaintext-button" type="submit">Sair</button>
+        </form>
+    </div>
+
+</div>
+
+{% endif %}
