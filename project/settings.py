@@ -40,6 +40,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'debug_toolbar',
     
     # apps
     'apps.recipes',
@@ -48,6 +49,7 @@ INSTALLED_APPS = [
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
+    'debug_toolbar.middleware.DebugToolbarMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
@@ -62,7 +64,7 @@ TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
         'DIRS': [
-            BASE_DIR / 'base_templates',
+            BASE_DIR / 'base/base_templates',
         ],
         'APP_DIRS': True,
         'OPTIONS': {
@@ -126,7 +128,7 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 STATICFILES_DIRS = [
-    BASE_DIR / 'base_static'
+    BASE_DIR / 'base/base_static'
 ]
 
 STATIC_ROOT = BASE_DIR / 'static'
@@ -143,3 +145,10 @@ MESSAGES_TAGS = {
     constants.SUCCESS: 'message-sucess',
     constants.WARNING: 'message-warning',
 }
+
+# DJANGO DEBUG TOOLBAR
+INTERNAL_IPS = [
+    # ...
+    '127.0.0.1',
+    # ...
+]

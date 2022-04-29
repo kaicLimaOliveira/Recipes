@@ -13,14 +13,14 @@ class RecipeDetailViewTest(RecipeTestBase):
             reverse('recipes:recipe', args=(3,))
         )
         
-        self.assertIs(view.func, views.recipe)
+        self.assertIs(view.func.view_class, views.RecipeDetail)
     
     def test_recipe_detail_view_returns_404_if_no_recipes_found(self):
         """
         Checks if the status code returns 404 with id not exists
         """
         response = self.client.get(
-            reverse('recipes:recipe', kwargs={'id': 1000})
+            reverse('recipes:recipe', kwargs={'pk': 1000})
         )
         
         self.assertEqual(response.status_code, 404)
@@ -36,7 +36,7 @@ class RecipeDetailViewTest(RecipeTestBase):
             reverse(
                 'recipes:recipe', 
                 kwargs={
-                    'id': 1
+                    'pk': 1
                 }
             )
         )
@@ -44,7 +44,7 @@ class RecipeDetailViewTest(RecipeTestBase):
         content = response.content.decode('utf-8')
         self.assertIn(needed_title, content)
         
-    def test_recipe_detail_template_dont_load(self):
+    def test_recipe_detail_template_dont_load_recipe_not_published(self):
         """
         Check if recipe is published don't show
         """
@@ -54,7 +54,7 @@ class RecipeDetailViewTest(RecipeTestBase):
             reverse(
                 'recipes:recipe', 
                 kwargs={
-                    'id': recipe.id
+                    'pk': recipe.id
                 }
             )
         )
