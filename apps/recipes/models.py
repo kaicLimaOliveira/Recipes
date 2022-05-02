@@ -2,10 +2,13 @@ import os
 
 from django.conf import settings
 from django.contrib.auth.models import User
+from django.contrib.contenttypes.fields import GenericRelation
 from django.db import models
 from django.urls import reverse
 from django.utils.text import slugify
 from PIL import Image
+
+from apps.tag.models import Tag
 
 
 class Category(models.Model):
