@@ -1,14 +1,14 @@
 import os
 
+from django.contrib import messages
 from django.db.models import Q
 from django.forms import model_to_dict
+from django.forms.models import model_to_dict
 from django.http import Http404, JsonResponse
 from django.shortcuts import render
-from django.contrib import messages
-from django.views.generic import ListView, DetailView
-from django.forms.models import model_to_dict
-
+from django.views.generic import DetailView, ListView
 from utils.pagination import make_pagination
+
 from apps.recipes.models import Recipe
 
 PER_PAGE = int(os.environ.get('PER_PAGE', 6))
@@ -24,7 +24,8 @@ class RecipeListViewBase(ListView):
         qs = qs.filter( 
             is_published=True
         )
-        qs = qs.select_related('author', 'category')
+        qs = qs.select_related('author', 'category', 'author__profile')
+        # qs = qs.prefetch_related('tags')
         
         return qs
     

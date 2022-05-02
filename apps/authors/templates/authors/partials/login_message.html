@@ -13,11 +13,8 @@
         </button>
         {% endif %}
 
-        <form action="{% url 'authors:logout' %}">
-            {% csrf_token %}
-            <input type="hidden" name="username" value="{{ request.user.username }}">
-            <button class="plaintext-button" type="submit">Sair</button>
-        </form>
+        {% include 'authors/partials/form_logout.html' %}
+        <button class="plaintext-button" type="submit">Sair</button>
     </div>
 
 </div>
